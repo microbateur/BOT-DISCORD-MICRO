@@ -2,17 +2,18 @@ import discord
 from discord.ext import commands
 import random
 import time
-import asyncio
 import youtube_dl
+import asyncio
+import ffmpeg
 
 from discord.user import User
 
 #prefix
 bot = commands.Bot(command_prefix = "!")
 
-#utilisateur discord
-client = discord.Client()
-
+# Launch Youtube
+musics = {}
+ytdl = youtube_dl.YoutubeDL()
 
 ###################################################
 #                     DEBUT                       #
@@ -23,19 +24,6 @@ print("LAUNCH")
 
 
 ###################################################
-#                  FERMETURE                      #
-###################################################
-
-
-#fermeture du bot
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def close(ctx):
-    await bot.close()
-    print("Bot Closed")
-    
-
-###################################################
 #                  AUTO REPONSE                   #
 ###################################################
 
@@ -43,18 +31,21 @@ async def close(ctx):
 @bot.event
 async def on_message(message):
 # Liste de message et d'émoji
-    Ewink = bot.get_emoji(842166658633695243)
+    Ewink = bot.get_emoji(842378741341749249)
+    print("recup wink")
     EGulag = bot.get_emoji(799687664060203028)
-    EEyes = bot.get_emoji(842167759248556052)
-    AutoR = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EEyes)]
+    EFNews = bot.get_emoji(802274654005755935)
+    AutoR = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EFNews)]
+    print("Listed")
 # User
-    user = [492278387038093312,683018314611687549] #Id de la cible
+    user = [492278387038093312,683018314611687549,200232047623536640] #Id de la cible
 # Auto Message
     if  message.author.id in user :
         
         CHANNEL_ID = message.channel.id
         CHANNEL = bot.get_channel(CHANNEL_ID) #CHANNEL_ID = le message dans le bon channel
         await CHANNEL.send(random.choice(AutoR)) # Message récup de la Liste de message
+        print("Emoji Send") # Vérification
 #    
 
 
@@ -62,10 +53,6 @@ async def on_message(message):
 #                    MUSIQUE                      #
 ###################################################
 
-
-# Launch
-musics = {}
-ytdl = youtube_dl.YoutubeDL()
 
 # Initialisation
 class Video:
@@ -130,10 +117,23 @@ async def play(ctx, url):
         video = Video(url)
         musics[ctx.guild] = []
         client = await channel.connect()
-        await ctx.send(f"Je lance : {video.url}")
+        await ctx.send("Je lance : {video.url}")
         play_song(client, musics[ctx.guild], video)
 
 
+###################################################
+#                  FERMETURE                      #
+###################################################
+
+
+#fermeture du bot
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def close(ctx):
+    await bot.close()
+    print("Bot Closed")
+    
+    
 ###################################################
 #                  COMING SOON                    #
 ###################################################
