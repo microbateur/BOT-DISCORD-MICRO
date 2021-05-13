@@ -3,19 +3,13 @@ from discord.ext import commands
 import random
 import time
 from discord.ext.commands.core import command
-import youtube_dl
 import asyncio
-import ffmpeg
 import emoji
 
 from discord.user import User
 
 #prefix
 bot = commands.Bot(command_prefix = "!")
-
-# Launch Youtube
-musics = {}
-ytdl = youtube_dl.YoutubeDL()
 
 ###################################################
 #                     DEBUT                       #
@@ -37,8 +31,6 @@ async def on_message(message):
     EGulag = bot.get_emoji(799687664060203028)
     EFNews = bot.get_emoji(802274654005755935)
     AutoR = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EFNews)]
-    print("Listed")
-    MSG = message.content
 # User
     user = [492278387038093312,683018314611687549,200232047623536640] #Id de la cible
 # Auto Message
@@ -49,10 +41,8 @@ async def on_message(message):
         await CHANNEL.send(random.choice(AutoR)) # Message récup de la Liste de message
         print("Emoji Send") # Vérification  
 # Fermeture de la boucle    
-#    MSG = message.content
-#    if  MSG == "stop" in user is True :
-#        async def skip():
-#        print("break")
+#   MSG = message.content
+#    if  MSG == "stop" in user is True :    
 #    
 
 
