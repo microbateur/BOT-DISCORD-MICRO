@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import time
+from discord.ext.commands.bot import when_mentioned
 from discord.ext.commands.core import command
 import asyncio
 import emoji
@@ -24,26 +25,54 @@ print("LAUNCH")
 ###################################################
 
 
+#Valeurs Initiales du STOP
+STOPPED = False
+STOP_COUNT = 0
+#
 @bot.event
 async def on_message(message):
+#Valeur de Base pour le STOP
+    global STOPPED
+    global STOP_COUNT
+# Valeur de Base des Messages
+    global CS_ID
+    global CS
+    C_ID = message.channel.id #id du message
+    C = bot.get_channel(C_ID) #Localisation du message
 # Liste de message et d'émoji
     Ewink = emoji.emojize(":wink:")
     EGulag = bot.get_emoji(799687664060203028)
     EFNews = bot.get_emoji(802274654005755935)
-    AutoR = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EFNews)]
+    EPOWA = bot.get_emoji(797821182824022046)
+    AutoM = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EFNews)]
+    MSG = message.content
 # User
-    user = [492278387038093312,683018314611687549,200232047623536640] #Id de la cible
+    user = [492278387038093312,683018314611687549,200232047623536640,226741480595652608,584125468773711896,107749538319601664,180724665042337793,259611405643284483,252436885568225281] #Id de la cible
 # Auto Message
-    if  message.author.id in user :
-        
-        CHANNEL_ID = message.channel.id
-        CHANNEL = bot.get_channel(CHANNEL_ID) #CHANNEL_ID = le message dans le bon channel
-        await CHANNEL.send(random.choice(AutoR)) # Message récup de la Liste de message
-        print("Emoji Send") # Vérification  
-# Fermeture de la boucle    
-#   MSG = message.content
-#    if  MSG == "stop" in user is True :    
+    #Si le message contient STOP on remet le compteur à 0
+    if "stop" in MSG :
+        STOPPED = True
+        STOP_COUNT = 0
+        await C.send("Auto Message est arrêté :sleeping:")
+    #Si STOPPED est égale à vrai en liaison avec MSG = "stop" on met un compteur +1 à chaque passage
+    if STOPPED == True:
+        STOP_COUNT = STOP_COUNT + 1
+        if STOP_COUNT == 29:
+            await C.send("Auto Message est de retour "+ str(EPOWA)) #Message avant lancement
+        if STOP_COUNT > 30:
+            STOPPED = False
+            STOP_COUNT = 0
+    if  message.author.id in user and STOPPED == False:
+        await C.send(random.choice(AutoM)) #Message Random récupéré de la liste AutoM
+        print("Message Send") # Vérification  
 #    
+
+###################################################
+#                AUTO REACTION                    #
+###################################################
+
+
+
 
 
 ###################################################
