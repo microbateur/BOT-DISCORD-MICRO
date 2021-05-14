@@ -6,11 +6,10 @@ from discord.ext.commands.bot import when_mentioned
 from discord.ext.commands.core import command
 import asyncio
 import emoji
-
 from discord.user import User
 
 #prefix
-bot = commands.Bot(command_prefix = "!")
+bot = commands.Bot(command_prefix='!')
 
 ###################################################
 #                     DEBUT                       #
@@ -47,7 +46,13 @@ async def on_message(message):
     AutoM = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EFNews)]
     MSG = message.content
 # User
-    user = [492278387038093312,683018314611687549,200232047623536640,226741480595652608,584125468773711896,107749538319601664,180724665042337793,259611405643284483,252436885568225281] #Id de la cible
+    user = [683018314611687549,226741480595652608,584125468773711896,107749538319601664,180724665042337793,259611405643284483,252436885568225281] #Id de la cible
+    user1 = [492278387038093312] #Id de la cible Emoji
+# Auto Réaction
+    if  message.author.id in user1:
+        await message.add_reaction("👉")
+        await message.add_reaction("👌")
+        print("Emoji Send") # Vérification  
 # Auto Message
     #Si le message contient STOP on remet le compteur à 0
     if "stop" in MSG :
@@ -65,16 +70,10 @@ async def on_message(message):
     if  message.author.id in user and STOPPED == False:
         await C.send(random.choice(AutoM)) #Message Random récupéré de la liste AutoM
         print("Message Send") # Vérification  
+
+    await bot.process_commands(message) #fin de bot event
 #    
-
-###################################################
-#                AUTO REACTION                    #
-###################################################
-
-
-
-
-
+      
 ###################################################
 #                  FERMETURE                      #
 ###################################################
@@ -82,9 +81,9 @@ async def on_message(message):
 
 #fermeture du bot
 @bot.command()
-@commands.has_permissions(administrator=True)
-async def close(ctx):
+async def close(ctx) :
     await bot.close()
+    time.sleep(1)
     print("Bot Closed")
     
     
