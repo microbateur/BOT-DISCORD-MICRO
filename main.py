@@ -74,6 +74,7 @@ async def on_message(message):
     await bot.process_commands(message) #fin de bot event
 #    
       
+
 ###################################################
 #                  FERMETURE                      #
 ###################################################
@@ -85,8 +86,8 @@ async def close(ctx) :
     await bot.close()
     time.sleep(1)
     print("Bot Closed")
-    
-    
+ 
+
 ###################################################
 #                  COMING SOON                    #
 ###################################################
