@@ -27,12 +27,16 @@ print("LAUNCH")
 #Valeurs Initiales du STOP
 STOPPED = False
 STOP_COUNT = 0
+STOPPEDR = False
+STOP_COUNTR = 0
 #
 @bot.event
 async def on_message(message):
-#Valeur de Base pour le STOP
+#Valeur de Base pour le STOP (avec R c'est pour les Réaction)
     global STOPPED
     global STOP_COUNT
+    global STOPPEDR
+    global STOP_COUNTR
 # Valeur de Base des Messages
     global CS_ID
     global CS
@@ -45,14 +49,29 @@ async def on_message(message):
     EPOWA = bot.get_emoji(797821182824022046)
     AutoM = ["Mais NON!","Ah Oui " + str(Ewink) ,"Genre","Okem Cool " + str(EGulag),"Alors peut-être", "Attention " + str(EFNews)]
     MSG = message.content
+    MSGR = message.content
 # User
-    user = [683018314611687549,226741480595652608,584125468773711896,107749538319601664,180724665042337793,259611405643284483,252436885568225281] #Id de la cible
+    user = [683018314611687549,107749538319601664,180724665042337793,259611405643284483,252436885568225281,322091075277946881,173091296796213248,217724367243706369] #Id de la cible
     user1 = [492278387038093312] #Id de la cible Emoji
 # Auto Réaction
-    if  message.author.id in user1:
+    #Si le message contient STOP REACTION on remet le compteur à 0
+    if "down" in MSGR :
+        STOPPEDR = True
+        STOP_COUNTR = 0
+        await C.send("Auto Réaction est arrêté :sleeping:")
+    #Si STOPPED est égale à vrai en liaison avec MSGR = "stop reaction" on met un compteur +1 à chaque passage
+    if  STOPPEDR == True:
+        STOP_COUNTR = STOP_COUNTR + 1
+        if STOP_COUNTR == 29:
+            await C.send("Auto Réaction est de retour "+ str(EPOWA)) #Message avant lancement
+        if STOP_COUNTR > 30:
+            STOPPEDR = False
+            STOP_COUNTR = 0
+    if  message.author.id in user1 and STOPPEDR == False  :
         await message.add_reaction("👉")
         await message.add_reaction("👌")
         print("Emoji Send") # Vérification  
+    
 # Auto Message
     #Si le message contient STOP on remet le compteur à 0
     if "stop" in MSG :
