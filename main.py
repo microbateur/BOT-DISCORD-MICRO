@@ -104,7 +104,7 @@ async def on_message(message):
 async def close(ctx) :
     await bot.close()
     time.sleep(1)
-    print("Bot Closed")
+    print("Bot Closed") #Vérification
  
 
 ###################################################
