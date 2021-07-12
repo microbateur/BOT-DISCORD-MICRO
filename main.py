@@ -111,4 +111,4 @@ async def close(ctx) :
 #                  COMING SOON                    #
 ###################################################
 
-bot.run("ODQyMDkxODI3OTA4OTY4NDc3.YJwRIQ.IOckQmLlgoR9BJq391CVZOYHUbo")
+bot.run()
